@@ -1570,4 +1570,9 @@ JVM_GetVersionInfo(JNIEnv* env, jvm_version_info* info, size_t info_size) {
   //    JvmIgnore("JVM_GetVersionInfo");
 }
 
+void
+JVM_GetClassTypeAnnotations(){
+    JvmUnimplemented("JVM_GetClassTypeAnnotations");
+}
+
 } // extern "C"

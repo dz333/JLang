@@ -11,8 +11,13 @@ POLYGLOT := lib/polyglot/
 JAVACPP_PRESETS := lib/javacpp-presets/
 SUBMODULES := $(addsuffix .git,$(POLYGLOT) $(JAVACPP_PRESETS))
 
+# Setup variables for travis CI
+ifdef TRAVIS
+ADDITIONAL_JLANGC_OPTIONS:=-compiler-classpath $(realpath lib/llvm-linux-x86_64-Ubuntu12.04.jar)
+endif
+
 # JLang
-export PLC := $(realpath bin/jlangc)
+export PLC := $(realpath bin/jlangc) $(ADDITIONAL_JLANGC_OPTIONS)
 
 # Hack to allow dependency on PolyLLVM source.
 export PLC_SRC := $(realpath $(shell find compiler/src -name "*.java"))

@@ -2,6 +2,7 @@
 // missing for various (usually unknown) reasons.
 #include <cstdio>
 #include <cstdlib>
+#include <execinfo.h>
 #include "jni.h"
 
 extern "C" {

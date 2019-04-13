@@ -1,0 +1,90 @@
+language: java
+jdk:
+  - oraclejdk8
+
+cache:
+  directories:
+    - /usr/local/Homebrew
+
+env: BOEHM_VERSION=7.6.4
+
+addons:
+  homebrew:
+    packages:
+    - llvm@5
+    - git-lfs
+    - ant@1.9
+    - libatomic_ops
+    update: true
+  apt:
+    sources:
+      - llvm-toolchain-trusty-5.0
+      - llvm-toolchain-trusty-6.0
+      - sourceline: 'ppa:ubuntu-toolchain-r/test'
+      - sourceline: 'ppa:git-core/ppa'
+    packages:
+      - clang-5.0 llvm-5.0 llvm-5.0-dev libllvm5.0 libstdc++6 libclang-common-5.0-dev libclang1-5.0 llvm-5.0-runtime libllvm5.0 libstdc++6 libllvm5.0
+      - libatomic-ops-dev
+
+matrix:
+  include:
+    - os: osx
+      compiler: clang
+      osx_image: xcode9.3
+
+    - os: linux
+      dist: precise
+
+install: 
+  - |
+    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+      # Install git lfs
+      curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+      sudo apt-get install git-lfs
+
+      # Install ant 1.9.14
+      wget https://www-us.apache.org/dist//ant/binaries/apache-ant-1.9.14-bin.tar.gz
+      sudo tar -xzf apache-ant-1.9.14-bin.tar.gz
+      export PATH=$(pwd)/apache-ant-1.9.14/bin:${PATH}
+
+      # Download Boehm GC
+      wget http://www.hboehm.info/gc/gc_source/gc-${BOEHM_VERSION}.tar.gz
+      sudo tar -xzf gc-${BOEHM_VERSION}.tar.gz
+    else
+      # Add llvm 5 to the path
+      export PATH="/usr/local/opt/llvm@5/bin:$PATH"
+
+      #Add ant 1.9 to the path
+      export PATH="/usr/local/opt/ant@1.9/bin:$PATH"
+
+      #Download Boehm GC
+      curl -OL http://www.hboehm.info/gc/gc_source/gc-${BOEHM_VERSION}.tar.gz
+      sudo tar -xzf gc-${BOEHM_VERSION}.tar.gz
+    fi
+
+  # Install Boehm GC
+  - sudo tar -xzf gc-${BOEHM_VERSION}.tar.gz
+  - cd gc-${BOEHM_VERSION}
+  - sudo ./configure 
+  - sudo make 
+  - sudo make install
+
+before_script:
+  - cd ${TRAVIS_BUILD_DIR}
+  - git lfs pull
+  - |
+    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+      export JDK7=/usr/lib/jvm/java-7-oracle
+      export CLANG_VERSION=5.0
+    else
+      export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+      export JDK7=$(/usr/libexec/java_home -v 1.8)
+      export JDK=jdk
+    fi
+
+script:
+  - |
+      make
+      if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+        make tests
+      fi
