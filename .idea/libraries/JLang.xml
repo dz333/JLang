@@ -1,0 +1,18 @@
+<component name="libraryTable">
+  <library name="JLang">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/hamcrest-core-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javacpp.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit-4.12.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/llvm-linux-x86_64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/llvm.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ppg.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/llvm-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/llvm-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

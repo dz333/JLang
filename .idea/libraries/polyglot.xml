@@ -3,10 +3,8 @@
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/polyglot/lib/ppg.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/polyglot/lib/java_cup.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/polyglot/lib/efg.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/polyglot/lib/iDoclet.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/polyglot/lib/polyglot.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/polyglot/lib/pth.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/polyglot/lib/itextpdf.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/polyglot/lib/emma.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/polyglot/lib/jflex.jar!/" />

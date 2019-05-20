@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="java_cup">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/polyglot/tools/java_cup/lib/java_cup.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
