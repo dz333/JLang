@@ -1,4 +1,4 @@
-//Copyright (C) 2018 Cornell University
+// Copyright (C) 2018 Cornell University
 
 // Provides methods to construct common Java objects
 // needed by native code. These factory methods directly
@@ -10,14 +10,14 @@
 
 // Arrays.
 jbooleanArray CreateJavaBooleanArray(jint len);
-jbyteArray    CreateJavaByteArray   (jint len);
-jcharArray    CreateJavaCharArray   (jint len);
-jshortArray   CreateJavaShortArray  (jint len);
-jintArray     CreateJavaIntArray    (jint len);
-jlongArray    CreateJavaLongArray   (jint len);
-jfloatArray   CreateJavaFloatArray  (jint len);
-jdoubleArray  CreateJavaDoubleArray (jint len);
-jobjectArray  CreateJavaObjectArray (jint len);
+jbyteArray CreateJavaByteArray(jint len);
+jcharArray CreateJavaCharArray(jint len);
+jshortArray CreateJavaShortArray(jint len);
+jintArray CreateJavaIntArray(jint len);
+jlongArray CreateJavaLongArray(jint len);
+jfloatArray CreateJavaFloatArray(jint len);
+jdoubleArray CreateJavaDoubleArray(jint len);
+jobjectArray CreateJavaObjectArray(jint len);
 
 // Strings.
 jstring CreateJavaString(jcharArray chars);

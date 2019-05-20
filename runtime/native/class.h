@@ -1,4 +1,4 @@
-//Copyright (C) 2018 Cornell University
+// Copyright (C) 2018 Cornell University
 
 // Provides reflection-like support, especially for use by JNI.
 // JLang emits static information for each class, and registers
@@ -11,14 +11,15 @@
 #pragma once
 
 #include "jni.h"
-#include <stdint.h>
-#include <utility>
-#include <string>
 #include "rep.h"
+#include <stdint.h>
+#include <string>
+#include <utility>
 
 #define IS_STATIC_METHOD(minfo) ((minfo)->offset == -1)
 #define IS_CONSTRUCTOR(minfo) ((minfo)->offset == -2)
-#define IS_INTERFACE_METHOD(minfo) ((minfo)->inft_id == NULL && minfo->intf_id_hash == 0)
+#define IS_INTERFACE_METHOD(minfo)                                             \
+    ((minfo)->inft_id == NULL && minfo->intf_id_hash == 0)
 
 extern "C" {
 // These structs are generated statically for each class, and
@@ -27,67 +28,66 @@ extern "C" {
 
 // Concrete representation for the opaque type jfieldID.
 struct JavaFieldInfo {
-    char* name;
+    char *name;
     int32_t offset;
     int32_t modifiers;
-    jclass* type_ptr;
-    char* sig;
+    jclass *type_ptr;
+    char *sig;
 };
-//This is also a representation for the jfieldID type, but
-//represented differently since static fields are implemented as global pointers.
+// This is also a representation for the jfieldID type, but
+// represented differently since static fields are implemented as global
+// pointers.
 struct JavaStaticFieldInfo {
-    char* name;
-    char* sig;
-    void* ptr;
+    char *name;
+    char *sig;
+    void *ptr;
     int32_t modifiers;
-    jclass* type_ptr;
+    jclass *type_ptr;
 };
 
 // Concrete representation for the opaque type jmethodID.
 struct JavaMethodInfo {
-    char* name;       // Name (without signature).
-    char* sig;        // JNI-specified signature encoding.
+    char *name;       // Name (without signature).
+    char *sig;        // JNI-specified signature encoding.
     int32_t offset;   // Offset into dispatch vector. -1 for static methods.
-    void* fnPtr;      // Used for CallNonvirtual and CallStatic.
-    void* trampoline; // Trampoline for casting the fnPtr to the correct type.
-    void* intf_id;    // For interface methods, the interface id.
+    void *fnPtr;      // Used for CallNonvirtual and CallStatic.
+    void *trampoline; // Trampoline for casting the fnPtr to the correct type.
+    void *intf_id;    // For interface methods, the interface id.
     int32_t intf_id_hash; // A precomputed hash of the intf_id.
     int32_t modifiers;
-    jclass* returnType;
+    jclass *returnType;
     int32_t numArgTypes;
-    jclass** argTypes;  // array of arg types
+    jclass **argTypes; // array of arg types
 };
 
 struct JavaClassInfo {
-    char* name;
-    jclass* super_ptr;
-    void* cdv; //is a DispatchVector*
+    char *name;
+    jclass *super_ptr;
+    void *cdv;        // is a DispatchVector*
     int32_t obj_size; // for array, it does not include data_size
 
     jboolean isIntf;
 
     int32_t num_intfs;
-    jclass** intfs;
+    jclass **intfs;
 
     int32_t num_fields;
-    JavaFieldInfo* fields;
+    JavaFieldInfo *fields;
 
     int32_t num_static_fields;
-    JavaStaticFieldInfo* static_fields;
+    JavaStaticFieldInfo *static_fields;
 
     int32_t num_methods;
-    JavaMethodInfo* methods;
-
+    JavaMethodInfo *methods;
 };
 
 // Called by the runtime at most once per class to register
 // the class information declared above.
-void
-RegisterJavaClass(jclass cls, const JavaClassInfo* data);
+void RegisterJavaClass(jclass cls, const JavaClassInfo *data);
 
-jarray createArray(const char* arrType, int* len, int sizeOfLen);
+jarray createArray(const char *arrType, int *len, int sizeOfLen);
 
-jarray create1DArray(const char* arrType, int len);
+jarray create1DArray(const char *arrType, int len);
 
 void InternStringLit(jstring str);
 
@@ -95,35 +95,30 @@ void InternStringLit(jstring str);
 
 const void RegisterPrimitiveClasses();
 
-const JavaClassInfo*
-GetJavaClassInfo(jclass cls);
+const JavaClassInfo *GetJavaClassInfo(jclass cls);
 
-//Assumes non-null valid C-string for name
-//name is in java.lang.String format
-const jclass
-GetJavaClassFromName(const char* name);
+// Assumes non-null valid C-string for name
+// name is in java.lang.String format
+const jclass GetJavaClassFromName(const char *name);
 
-//Assumes non-null valid C-string for name
-//name is in java/lang/String format
-const jclass
-GetJavaClassFromPathName(const char* name);
+// Assumes non-null valid C-string for name
+// name is in java/lang/String format
+const jclass GetJavaClassFromPathName(const char *name);
 
-const JavaFieldInfo*
-GetJavaFieldInfo(jclass cls, const char* name);
+const JavaFieldInfo *GetJavaFieldInfo(jclass cls, const char *name);
 
-const JavaStaticFieldInfo*
-GetJavaStaticFieldInfo(jclass cls, const char* name, const char* sig);
+const JavaStaticFieldInfo *GetJavaStaticFieldInfo(jclass cls, const char *name,
+                                                  const char *sig);
 
-const std::pair<JavaMethodInfo*,int32_t>
-GetJavaMethodInfo(jclass cls, const char* name, const char* sig);
+const std::pair<JavaMethodInfo *, int32_t>
+GetJavaMethodInfo(jclass cls, const char *name, const char *sig);
 
-const std::pair<JavaMethodInfo*, int32_t>
-GetJavaStaticMethodInfo(jclass cls, const char* name, const char* sig);
+const std::pair<JavaMethodInfo *, int32_t>
+GetJavaStaticMethodInfo(jclass cls, const char *name, const char *sig);
 
-jclass
-LoadJavaClassFromLib(const char* name);
+jclass LoadJavaClassFromLib(const char *name);
 
-bool isArrayClassName(const char* name);
+bool isArrayClassName(const char *name);
 
 bool isArrayClass(jclass cls);
 
@@ -131,13 +126,13 @@ bool isPrimitiveClass(jclass cls);
 
 jclass GetComponentClass(jclass cls);
 
-char primitiveNameToComponentName(const char* name);
+char primitiveNameToComponentName(const char *name);
 
 int arrayRepSize(jclass cls);
 
-std::string SigToClassName(const std::string& sig);
+std::string SigToClassName(const std::string &sig);
 
-jarray create1DArray(const char* arrType, int len);
+jarray create1DArray(const char *arrType, int len);
 
 extern jclass Polyglot_native_int;
 extern jclass Polyglot_native_byte;
