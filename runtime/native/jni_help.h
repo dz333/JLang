@@ -1,7 +1,6 @@
 // Copyright (C) 2018 Cornell University
 
-#ifndef __JNI_H__
-#define __JNI_H__
+#pragma once
 
 #include "class.h"
 #include "factory.h"
@@ -17,10 +16,6 @@
 #include <vector>
 
 typedef uint8_t u_char;
-
-static jboolean mainThreadIsAlive = JNI_FALSE;
-static jobject mainThread = NULL;
-static jobject mainThreadGroup = NULL;
 
 [[noreturn]] static void JniUnimplemented(const char *name) {
     fprintf(stderr,
@@ -349,27 +344,6 @@ static jobjectArray GetJavaConstructors(jclass clazz, const JavaClassInfo *info,
     return res;
 }
 
-static jobject GetMainThread() {
-    if (mainThread == NULL) {
-        if (mainThreadGroup == NULL) {
-            auto thread_group_clazz =
-                LoadJavaClassFromLib("java.lang.ThreadGroup");
-            mainThreadGroup = CreateJavaObject(thread_group_clazz);
-            CallJavaInstanceMethod<jobject>(mainThreadGroup, "<init>", "()V",
-                                            NULL);
-        }
-        auto thread_clazz = GetJavaClassFromName("java.lang.Thread");
-        mainThread = CreateJavaObject(thread_clazz);
-        const jobject mainThreadArgs[] = {mainThreadGroup, NULL, NULL};
-        CallJavaInstanceMethod<jobject>(
-            mainThread, "<init>",
-            "(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/Thread;)V",
-            reinterpret_cast<const jvalue *>(mainThreadArgs));
-        mainThreadIsAlive = JNI_TRUE;
-    }
-    return mainThread;
-}
-
 // Copied from JDK implementation, TODO replace with our own impl
 // UTF8 helpers
 // Writes a jchar a utf8 and returns the end
@@ -421,4 +395,3 @@ static char *as_utf8(jchar *base, int length, u_char *result) {
     assert(p == &result[utf8_len]);
     return (char *)result;
 }
-#endif

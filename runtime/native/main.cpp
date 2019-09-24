@@ -10,6 +10,7 @@
 #include "gc.h"
 #include "rep.h"
 #include "stack_trace.h"
+#include "init.h"
 
 extern "C" {
 
@@ -65,6 +66,6 @@ int main(int argc, char **argv) {
         jstring argStr = CreateJavaString(argChars);
         args_data[i] = argStr;
     }
-    Polyglot_java_lang_System_initializeSystemClass__();
+    InitializeMainThread();
     Polyglot_jlang_runtime_MainWrapper_runMain___3Ljava_lang_String_2(args);
 }
