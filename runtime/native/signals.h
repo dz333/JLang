@@ -4,6 +4,7 @@
 #define __JVM_SIGNAL_DEF__
 
 #include <signal.h>
+#include <cstring>
 
 struct siglabel {
     const char *name;
