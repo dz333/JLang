@@ -772,11 +772,13 @@ jint jni_UnregisterNatives(JNIEnv *env, jclass clazz) {
 }
 
 jint jni_MonitorEnter(JNIEnv *env, jobject obj) {
-    JniUnimplemented("MonitorEnter");
+    printf("MonitorEnter: %p\n", (void*)obj);
+    return 0;
 }
 
 jint jni_MonitorExit(JNIEnv *env, jobject obj) {
-    JniUnimplemented("MonitorExit");
+    printf("MonitorExit: %p\n", (void*)obj);
+    return 0;
 }
 
 jint jni_GetJavaVM(JNIEnv *env, JavaVM **vm);

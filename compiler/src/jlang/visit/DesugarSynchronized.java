@@ -31,11 +31,12 @@ public class DesugarSynchronized extends DesugarVisitor {
             // }
             Synchronized node = (Synchronized) n;
             Position pos = node.position();
-            // TempSSA or TempVar?
+            // TempSSA or TempVar? Create unique name for each use?
             LocalDecl declObj = tnf.TempSSA("syncObj", node.expr());
+            Local obj = tnf.Local(pos, declObj);
 
-            SynchronizedEnter syncEnter = nf.SynchronizedEnter(pos, tnf.Local(pos, declObj));
-            SynchronizedExit syncExit = nf.SynchronizedExit(pos, tnf.Local(pos, declObj));
+            SynchronizedEnter syncEnter = nf.SynchronizedEnter(pos, copy(obj));
+            SynchronizedExit syncExit = nf.SynchronizedExit(pos, copy(obj));
 
             // Should we copy the node?
             Block tryBlock = nf.Block(pos, syncEnter, node.body());

@@ -33,6 +33,8 @@ public class Constants {
     public static final String CREATE_ARRAY = "createArray";
     public static final String CREATE_1D_ARRAY = "create1DArray";
     public static final String RESUME_UNWIND_EXCEPTION = "_Unwind_Resume";
+    public static final String MONITOR_ENTER = "jni_MonitorEnter";
+    public static final String MONITOR_EXIT = "jni_MonitorExit";
   
     public static final Set<String> NON_INVOKE_FUNCTIONS = new HashSet<>(CollectionUtil.list(
             CALLOC, CREATE_EXCEPTION, EXTRACT_EXCEPTION
