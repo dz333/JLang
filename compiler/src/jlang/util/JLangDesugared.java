@@ -54,6 +54,8 @@ public class JLangDesugared extends AbstractGoal {
                 // is called at the beginning of each constructor.
                 new VisitorGoal(job, new DesugarInstanceInitializers(job, ts, nf)),
 
+                new VisitorGoal(job, new DesugarSynchronized(job, ts, nf)),
+
                 // Local desugar transformations.
                 // It's usually unsafe to run a pass after this one, since
                 // additional passes might create new non-desugared nodes.

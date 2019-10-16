@@ -31,6 +31,16 @@ public class JLangNodeFactory_c extends JL7NodeFactory_c implements JLangNodeFac
     }
 
     @Override
+    public SynchronizedEnter SynchronizedEnter(Position pos, Expr expr) {
+        return new SynchronizedEnter_c(pos, expr, extFactory().extSynchronizedEnter());
+    }
+
+    @Override
+    public SynchronizedExit SynchronizedExit(Position pos, Expr expr) {
+        return new SynchronizedExit_c(pos, expr, extFactory().extSynchronizedExit());
+    }
+
+    @Override
     public JLangExtFactory extFactory() {
         return (JLangExtFactory) super.extFactory();
     }

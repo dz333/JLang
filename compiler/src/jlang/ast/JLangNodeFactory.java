@@ -17,4 +17,8 @@ public interface JLangNodeFactory extends JL7NodeFactory {
     AddressOf AddressOf(Position pos, Expr expr);
 
     Load Load(Position pos, Expr expr);
+
+    SynchronizedEnter SynchronizedEnter(Position pos, Expr expr);
+
+    SynchronizedExit SynchronizedExit(Position pos, Expr expr);
 }

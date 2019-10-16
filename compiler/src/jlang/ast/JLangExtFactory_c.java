@@ -253,6 +253,16 @@ public final class JLangExtFactory_c extends JLangAbstractExtFactory_c {
     }
 
     @Override
+    public Ext extSynchronizedEnterImpl() {
+        return new JLangSynchronizedEnterExt();
+    }
+
+    @Override
+    public Ext extSynchronizedExitImpl() {
+        return new JLangSynchronizedExitExt();
+    }
+
+    @Override
     protected Ext extStringLitImpl() {
         return new JLangStringLitExt();
     }

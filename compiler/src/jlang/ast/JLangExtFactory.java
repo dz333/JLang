@@ -15,4 +15,8 @@ public interface JLangExtFactory extends JL7ExtFactory {
     Ext extAddressOf();
 
     Ext extLoad();
+
+    Ext extSynchronizedEnter();
+
+    Ext extSynchronizedExit();
 }
